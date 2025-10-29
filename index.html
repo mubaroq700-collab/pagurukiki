@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PakGurukiki - Dunia Pendidikan</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+  header { background:#007bff; color:white; text-align:center; padding:20px 0; }
+  header h1 { margin:0; font-size:28px; }
+  header p { margin:5px 0 0; font-size:16px; }
+
+  nav {
+    background:#0056b3;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    padding:10px;
+  }
+  nav a {
+    color:white; text-decoration:none; font-weight:bold;
+    transition:0.3s;
+  }
+  nav a:hover { color:#ffd700; text-decoration:underline; }
+
+  .main-container { max-width:1200px; margin:20px auto; padding:0 10px; }
+
+  /* Kotak besar cara-lihat-unduh */
+  .feature-grid {
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+    background:#e8f4ff;
+    padding:30px 20px;
+    border-radius:10px;
+  }
+  .feature-box {
+    background:white;
+    flex:1;
+    min-width:200px;
+    max-width:300px;
+    text-align:center;
+    padding:30px 20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+  }
+  .feature-box:hover { transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.2);}
+  .feature-box .icon { font-size:50px; margin-bottom:15px; }
+  .feature-box .title { font-weight:bold; font-size:18px; margin-bottom:10px; }
+  .feature-box .desc { font-size:14px; color:#555; }
+
+  /* Menu kotak utama di bawah */
+  .menu-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+    margin-bottom:40px;
+  }
+  .menu-box {
+    background:#007bff;
+    color:white;
+    text-align:center;
+    padding:30px 10px;
+    border-radius:10px;
+    text-decoration:none;
+    transition:0.3s;
+    position:relative;
+  }
+  .menu-box:hover { background:#0056b3; transform:scale(1.05); box-shadow:0 10px 20px rgba(0,0,0,0.2);}
+  .menu-box .icon { font-size:40px; margin-bottom:10px; }
+  .menu-box .title { font-weight:bold; font-size:16px; }
+
+  /* Sidebar */
+  .main-flex { display:flex; gap:20px; flex-wrap:wrap; }
+  .konten { flex:3; }
+  .sidebar { flex:1; background:#e0f0ff; padding:20px; border-radius:10px; max-height:600px; overflow-y:auto; }
+  .sidebar h3 { margin-top:0; color:#007bff; }
+  .berita-list { list-style:none; padding:0; }
+  .berita-list li { margin-bottom:10px; }
+  .berita-list a { text-decoration:none; color:#0056b3; transition:0.3s; }
+  .berita-list a:hover { color:#007bff; }
+
+  footer { text-align:center; background:#007bff; color:white; padding:15px 0; margin-top:40px; }
+
+  @media(max-width:900px){ .main-flex { flex-direction:column; } .sidebar{ max-height:none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PakGurukiki</h1>
+  <p> Download Perangkat dan Update Terbaru Seputar Pendidikan</p>
+</header>
+
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="download.html">Download RPP/Modul Ajar</a>
+  <a href="buku.html">Buku</a>
+  <a href="perangkat-ajar.html">Perangkat Pembelajaran</a>
+  <a href="update-pendidikan.html">Berita Pendidikan</a>
+  <a href="kontak.html">Kontak</a>
+</nav>
+
+<div class="main-container">
+
+  <!-- Kotak fitur utama CARA-LIHAT-UNDUH -->
+  <div class="feature-grid">
+    <div class="feature-box">
+      <div class="icon">🔍</div>
+      <div class="title">CARI</div>
+      <div class="desc">Cari RPP atau materi yang kamu butuhkan dengan mudah</div>
+    </div>
+    <div class="feature-box">
+      <div class="icon">📄</div>
+      <div class="title">LIHAT</div>
+      <div class="desc">Lihat terlebih dahulu sebelum mengunduh materi</div>
+    </div>
+    <div class="feature-box">
+      <div class="icon">⬇️</div>
+      <div class="title">UNDUH</div>
+      <div class="desc">Unduh materi RPP yang sesuai kebutuhanmu</div>
+    </div>
+  </div>
+
+  <div class="main-flex">
+    <!-- Konten utama menu kotak -->
+    <div class="konten">
+      <div class="menu-grid">
+        <a href="download.html" class="menu-box">
+          <div class="icon">📥</div>
+          <div class="title">Download RPP</div>
+        </a>
+        <a href="buku.html" class="menu-box">
+          <div class="icon">📚</div>
+          <div class="title">Buku</div>
+        </a>
+        <a href="perangkat-ajar.html" class="menu-box">
+          <div class="icon">📝</div>
+          <div class="title">Perangkat Ajar</div>
+        </a>
+        <a href="update-pendidikan.html" class="menu-box">
+          <div class="icon">📰</div>
+          <div class="title">Berita</div>
+        </a>
+        <a href="gudang-soal.html" class="menu-box">
+          <div class="icon">🗂️</div>
+          <div class="title">Gudang Soal</div>
+        </a>
+        <a href="pembelajaran-mendalam.html" class="menu-box">
+          <div class="icon">💡</div>
+          <div class="title">Pembelajaran Mendalam</div>
+        </a>
+        <a href="kalender-pendidikan.html" class="menu-box">
+          <div class="icon">🗓️</div>
+          <div class="title">Kalender Pendidikan</div>
+        </a>
+        <a href="aplikasi-raport.html" class="menu-box">
+          <div class="icon">📊</div>
+          <div class="title">Aplikasi Raport KM</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar berita -->
+    <aside class="sidebar">
+      <h3>Berita Terbaru</h3>
+      <ul class="berita-list">
+        <li><a href="#">Sekolah XYZ Luncurkan Kurikulum Baru</a></li>
+        <li><a href="#">Tips Belajar Efektif untuk Siswa</a></li>
+        <li><a href="#">Workshop Guru Nasional 2025</a></li>
+        <li><a href="#">Pengumuman Penerimaan Siswa Baru</a></li>
+        <li><a href="#">Update Modul Ajar Terbaru</a></li>
+      </ul>
+    </aside>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 Kiki Rizki Mubaroq | Semua Hak Dilindungi
+</footer>
+
+</body>
+</html>

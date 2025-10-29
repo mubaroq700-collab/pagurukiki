@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu Buku - PaguRukiki</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5f5f5; margin:0; padding:0; }
+  
+  header, footer { 
+    background: #007bff; 
+    color: white; 
+    text-align: center; 
+    padding: 20px 0; 
+  }
+  header h1 { margin:0; font-size: 24px; }
+  
+  nav { background: #0056b3; text-align: center; padding: 10px; }
+  nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+  nav a:hover { color: #ffd700; }
+
+  main { max-width: 900px; margin: 20px auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+  
+  .pilihan-buku { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+  .kotak-buku { flex: 1 1 200px; background: #007bff; color: white; text-align: center; padding: 40px 20px; border-radius: 10px; cursor: pointer; font-size: 18px; transition: 0.3s; }
+  .kotak-buku:hover { background: #0056b3; }
+
+  label { display:block; margin-top: 15px; font-weight: bold; }
+  select { padding: 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc; width: 100%; font-size: 16px; display:none; }
+  
+  .buku-section { display:none; margin-top: 20px; }
+  .buku-section a { display:block; margin:10px 0; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; transition:0.3s; }
+  .buku-section a:hover { background:#218838; }
+
+  @media (max-width: 600px){
+    nav a { display:block; margin: 5px 0; }
+    .pilihan-buku { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PaguRukiki</h1>
+  <p>Menu Buku</p>
+</header>
+
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="download.html">Download Perangkat</a>
+  <a href="buku.html">Buku</a>
+  <a href="#">Kontak</a>
+</nav>
+
+<main>
+  <div class="pilihan-buku">
+    <div class="kotak-buku" id="bukuGuru">Buku Guru</div>
+    <div class="kotak-buku" id="bukuSiswa">Buku Siswa</div>
+  </div>
+
+  <!-- Pilih Jenjang -->
+  <label for="jenjang" id="label-jenjang">Pilih Jenjang:</label>
+  <select id="jenjang"></select>
+
+  <!-- Pilih Kelas -->
+  <label for="kelas" id="label-kelas">Pilih Kelas:</label>
+  <select id="kelas"></select>
+
+  <!-- Pilih Mapel -->
+  <label for="mapel" id="label-mapel">Pilih Mata Pelajaran:</label>
+  <select id="mapel"></select>
+
+  <!-- Daftar Buku -->
+  <div id="bukuSection" class="buku-section">
+    <h2>Buku</h2>
+    <a id="buku1" href="" download>Buku 1</a>
+    <a id="buku2" href="" download>Buku 2</a>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 PaguRukiki | Semua Hak Dilindungi
+</footer>
+
+<script>
+const bukuGuruBtn = document.getElementById('bukuGuru');
+const bukuSiswaBtn = document.getElementById('bukuSiswa');
+const jenjangSelect = document.getElementById('jenjang');
+const kelasSelect = document.getElementById('kelas');
+const mapelSelect = document.getElementById('mapel');
+const labelJenjang = document.getElementById('label-jenjang');
+const labelKelas = document.getElementById('label-kelas');
+const labelMapel = document.getElementById('label-mapel');
+const bukuSection = document.getElementById('bukuSection');
+const buku1 = document.getElementById('buku1');
+const buku2 = document.getElementById('buku2');
+
+const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
+const mapelData = {
+  'sd-1':['Matematika','B.Indonesia','IPA'],
+  'sd-2':['Matematika','B.Indonesia','IPA'],
+  'sd-3':['Matematika','B.Indonesia','IPA'],
+  'sd-4':['Matematika','B.Indonesia','IPA'],
+  'sd-5':['Matematika','B.Indonesia','IPA'],
+  'sd-6':['Matematika','B.Indonesia','IPA'],
+  'smp-1':['Matematika','B.Indonesia','IPA'],
+  'smp-2':['Matematika','B.Indonesia','IPA'],
+  'smp-3':['Matematika','B.Indonesia','IPA'],
+  'sma-1':['Matematika','B.Indonesia','IPA'],
+  'sma-2':['Matematika','B.Indonesia','IPA'],
+  'sma-3':['Matematika','B.Indonesia','IPA']
+};
+
+let tipeBuku = '';
+
+function resetSelections() {
+  jenjangSelect.style.display='none';
+  kelasSelect.style.display='none';
+  mapelSelect.style.display='none';
+  labelJenjang.style.display='none';
+  labelKelas.style.display='none';
+  labelMapel.style.display='none';
+  bukuSection.style.display='none';
+  jenjangSelect.innerHTML='';
+  kelasSelect.innerHTML='';
+  mapelSelect.innerHTML='';
+}
+
+bukuGuruBtn.addEventListener('click', ()=>{
+  tipeBuku = 'guru';
+  resetSelections();
+  labelJenjang.style.display='block';
+  jenjangSelect.style.display='block';
+  jenjangSelect.innerHTML='<option value="">-- Pilih Jenjang --</option>';
+  ['sd','smp','sma'].forEach(j => {
+    const opt = document.createElement('option');
+    opt.value = j; opt.text = j.toUpperCase();
+    jenjangSelect.add(opt);
+  });
+});
+bukuSiswaBtn.addEventListener('click', ()=>{
+  tipeBuku = 'siswa';
+  resetSelections();
+  labelJenjang.style.display='block';
+  jenjangSelect.style.display='block';
+  jenjangSelect.innerHTML='<option value="">-- Pilih Jenjang --</option>';
+  ['sd','smp','sma'].forEach(j => {
+    const opt = document.createElement('option');
+    opt.value = j; opt.text = j.toUpperCase();
+    jenjangSelect.add(opt);
+  });
+});
+
+// Pilih Jenjang
+jenjangSelect.addEventListener('change', ()=>{
+  const jenjang = jenjangSelect.value;
+  kelasSelect.style.display='none';
+  labelKelas.style.display='none';
+  mapelSelect.style.display='none';
+  labelMapel.style.display='none';
+  bukuSection.style.display='none';
+  kelasSelect.innerHTML='';
+  mapelSelect.innerHTML='';
+  if(jenjang){
+    labelKelas.style.display='block';
+    kelasSelect.style.display='block';
+    kelasSelect.innerHTML='<option value="">-- Pilih Kelas --</option>';
+    kelasData[jenjang].forEach(k=>{
+      const opt = document.createElement('option');
+      opt.value = k; opt.text = 'Kelas '+k;
+      kelasSelect.add(opt);
+    });
+  }
+});
+
+// Pilih Kelas
+kelasSelect.addEventListener('change', ()=>{
+  const jenjang = jenjangSelect.value;
+  const kelas = kelasSelect.value;
+  mapelSelect.style.display='none';
+  labelMapel.style.display='none';
+  mapelSelect.innerHTML='';
+  bukuSection.style.display='none';
+  if(kelas){
+    const key = jenjang+'-'+kelas;
+    const mapels = mapelData[key];
+    if(mapels){
+      labelMapel.style.display='block';
+      mapelSelect.style.display='block';
+      mapelSelect.innerHTML='<option value="">-- Pilih Mata Pelajaran --</option>';
+      mapels.forEach(m=>{
+        const opt = document.createElement('option');
+        opt.value = m; opt.text = m;
+        mapelSelect.add(opt);
+      });
+    }
+  }
+});
+
+// Pilih Mapel
+mapelSelect.addEventListener('change', ()=>{
+  const jenjang = jenjangSelect.value;
+  const kelas = kelasSelect.value;
+  const mapel = mapelSelect.value;
+  if(mapel){
+    bukuSection.style.display='block';
+    buku1.href = `buku-${tipeBuku}-${jenjang}-${kelas}-${mapel}-1.pdf`;
+    buku1.textContent = `Download ${mapel} 1`;
+    buku2.href = `buku-${tipeBuku}-${jenjang}-${kelas}-${mapel}-2.pdf`;
+    buku2.textContent = `Download ${mapel} 2`;
+    bukuSection.scrollIntoView({behavior:'smooth'});
+  } else {
+    bukuSection.style.display='none';
+  }
+});
+</script>
+
+</body>
+</html>
