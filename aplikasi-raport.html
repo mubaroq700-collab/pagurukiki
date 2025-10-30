@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aplikasi Raport KM - PakGurukiki</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin:0; padding:0;
+    background:#f5f5f5;
+  }
+  header, footer {
+    background:#007bff;
+    color:white;
+    text-align:center;
+    padding:20px 0;
+  }
+  header h1 { margin:0; font-size:28px; }
+  header p { margin:5px 0 0; font-size:16px; }
+  nav {
+    background:#0056b3;
+    text-align:center;
+    padding:10px;
+  }
+  nav a {
+    color:white; margin:0 15px;
+    text-decoration:none; font-weight:bold;
+    transition:0.3s;
+  }
+  nav a:hover { color:#ffd700; }
+  main {
+    max-width:700px;
+    margin:30px auto;
+    background:white;
+    border-radius:10px;
+    padding:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  }
+  label { display:block; margin-top:15px; font-weight:bold; }
+  select, button {
+    width:100%; padding:12px; margin-top:8px;
+    border-radius:8px; border:1px solid #ccc; font-size:16px;
+    transition:0.3s;
+  }
+  select:hover, select:focus { border-color:#007bff; outline:none; }
+  button {
+    background:#007bff; color:white; border:none; cursor:pointer;
+    transition:0.3s; font-size:16px;
+  }
+  button:hover { background:#0056b3; }
+  .fade-in { opacity:0; transform:translateY(20px); animation:fadeIn 0.5s forwards; }
+  @keyframes fadeIn { to { opacity:1; transform:translateY(0); } }
+  .download-section { display:none; margin-top:25px; }
+  .download-section a button {
+    width:100%; padding:15px; border-radius:10px; font-weight:bold;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Aplikasi Raport KM</h1>
+  <p>Unduh Raport Sesuai Jenjang, Kelas, dan Semester</p>
+</header>
+
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="download.html">Download RPP</a>
+  <a href="buku.html">Buku</a>
+  <a href="perangkat-ajar.html">Perangkat</a>
+  <a href="gudang-soal.html">Gudang Soal</a>
+  <a href="update-pendidikan.html">Berita</a>
+</nav>
+
+<main>
+  <h2 style="text-align:center; color:#007bff;">Temukan Raport Sesuai Jenjang</h2>
+  <p style="text-align:center; color:#555;">Pilih jenjang, kelas, dan semester untuk mulai mengunduh raport.</p>
+
+  <div class="fade-in">
+    <label for="jenjang">Pilih Jenjang:</label>
+    <select id="jenjang">
+      <option value="">-- Pilih Jenjang --</option>
+      <option value="sd">SD</option>
+      <option value="smp">SMP</option>
+      <option value="sma">SMA</option>
+    </select>
+  </div>
+
+  <div class="fade-in" id="kelasDiv" style="display:none;">
+    <label for="kelas">Pilih Kelas:</label>
+    <select id="kelas">
+      <option value="">-- Pilih Kelas --</option>
+    </select>
+  </div>
+
+  <div class="fade-in" id="semesterDiv" style="display:none;">
+    <label for="semester">Pilih Semester:</label>
+    <select id="semester">
+      <option value="">-- Pilih Semester --</option>
+      <option value="1">Semester 1</option>
+      <option value="2">Semester 2</option>
+    </select>
+  </div>
+
+  <div id="downloadRaport" class="download-section fade-in">
+    <h3 style="color:#007bff;">Download Raport</h3>
+    <a id="raport1" href="" download style="display:none;"><button>Download Raport 1</button></a>
+    <a id="raport2" href="" download style="display:none;"><button>Download Raport 2</button></a>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 PakGurukiki | Semua Hak Dilindungi
+</footer>
+
+<script>
+const jenjangSelect = document.getElementById('jenjang');
+const kelasSelect = document.getElementById('kelas');
+const semesterSelect = document.getElementById('semester');
+const kelasDiv = document.getElementById('kelasDiv');
+const semesterDiv = document.getElementById('semesterDiv');
+const downloadDiv = document.getElementById('downloadRaport');
+const raport1 = document.getElementById('raport1');
+const raport2 = document.getElementById('raport2');
+
+// Pilih Jenjang
+jenjangSelect.addEventListener('change', ()=>{
+  downloadDiv.style.display='none';
+  semesterDiv.style.display='none';
+  kelasSelect.innerHTML = '<option value="">-- Pilih Kelas --</option>';
+
+  if(jenjangSelect.value === 'sd'){
+    for(let i=1;i<=6;i++){ kelasSelect.innerHTML += `<option value="${i}">Kelas ${i}</option>`; }
+  } else if(jenjangSelect.value === 'smp'){
+    for(let i=7;i<=9;i++){ kelasSelect.innerHTML += `<option value="${i}">Kelas ${i}</option>`; }
+  } else if(jenjangSelect.value === 'sma'){
+    for(let i=10;i<=12;i++){ kelasSelect.innerHTML += `<option value="${i}">Kelas ${i}</option>`; }
+  }
+
+  kelasDiv.style.display = jenjangSelect.value ? 'block' : 'none';
+});
+
+// Pilih Kelas
+kelasSelect.addEventListener('change', ()=>{
+  downloadDiv.style.display='none';
+  semesterSelect.value='';
+  semesterDiv.style.display = kelasSelect.value ? 'block' : 'none';
+});
+
+// Pilih Semester
+semesterSelect.addEventListener('change', ()=>{
+  const jenjang = jenjangSelect.value;
+  const kelas = kelasSelect.value;
+  const semester = semesterSelect.value;
+
+  if(semester){
+    downloadDiv.style.display='block';
+    raport1.href = `raport-${jenjang}-kelas${kelas}-semester${semester}-1.pdf`;
+    raport1.textContent = `Download Raport 1 (${jenjang.toUpperCase()} Kelas ${kelas} Semester ${semester})`;
+    raport2.href = `raport-${jenjang}-kelas${kelas}-semester${semester}-2.pdf`;
+    raport2.textContent = `Download Raport 2 (${jenjang.toUpperCase()} Kelas ${kelas} Semester ${semester})`;
+    raport1.style.display='block';
+    raport2.style.display='block';
+    downloadDiv.scrollIntoView({behavior:'smooth'});
+  } else {
+    downloadDiv.style.display='none';
+    raport1.style.display='none';
+    raport2.style.display='none';
+  }
+});
+</script>
+
+</body>
+</html>

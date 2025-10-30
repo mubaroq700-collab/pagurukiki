@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gudang Soal - PakGurukiki</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin:0;
+    padding:0;
+    background:#f5f5f5;
+  }
+
+  header, footer {
+    background:#007bff;
+    color:white;
+    text-align:center;
+    padding:20px 0;
+  }
+
+  header h1 { margin:0; font-size:26px; }
+  header p { margin:5px 0 0; font-size:16px; }
+
+  nav {
+    background:#0056b3;
+    text-align:center;
+    padding:10px;
+  }
+  nav a {
+    color:white;
+    margin:0 15px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+  }
+  nav a:hover { color:#ffd700; }
+
+  main {
+    max-width:700px;
+    margin:30px auto;
+    background:white;
+    border-radius:10px;
+    padding:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  label { display:block; margin-top:15px; font-weight:bold; }
+  select, button {
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:16px;
+  }
+
+  button {
+    background:#007bff;
+    color:white;
+    border:none;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  button:hover { background:#0056b3; }
+
+  .soal-section { display:none; margin-top:25px; }
+  .soal-section a {
+    display:block;
+    margin:10px 0;
+    text-align:center;
+  }
+
+  @media(max-width:600px){
+    nav a { display:block; margin:5px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gudang Soal</h1>
+  <p>Kumpulan Soal SD, SMP, dan SMA Lengkap UTS & PTS</p>
+</header>
+
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="download.html">Download RPP</a>
+  <a href="buku.html">Buku</a>
+  <a href="perangkat-ajar.html">Perangkat</a>
+  <a href="gudang-soal.html">Gudang Soal</a>
+  <a href="update-pendidikan.html">Berita</a>
+</nav>
+
+<main>
+  <h2 style="text-align:center; color:#007bff;">Temukan Soal UTS & PTS Sesuai Jenjang</h2>
+  <p style="text-align:center; color:#555;">Pilih jenjang, kelas, dan semester untuk mulai mengunduh soal latihan.</p>
+
+  <!-- Pilihan Jenjang -->
+  <label for="jenjang">Pilih Jenjang:</label>
+  <select id="jenjang">
+    <option value="">-- Pilih Jenjang --</option>
+    <option value="sd">SD</option>
+    <option value="smp">SMP</option>
+    <option value="sma">SMA</option>
+  </select>
+
+  <!-- Pilihan Kelas -->
+  <label for="kelas" id="label-kelas" style="display:none;">Pilih Kelas:</label>
+  <select id="kelas" style="display:none;">
+    <option value="">-- Pilih Kelas --</option>
+  </select>
+
+  <!-- Pilihan Semester -->
+  <label for="semester" id="label-semester" style="display:none;">Pilih Semester:</label>
+  <select id="semester" style="display:none;">
+    <option value="">-- Pilih Semester --</option>
+    <option value="1">Semester 1</option>
+    <option value="2">Semester 2</option>
+  </select>
+
+  <!-- Pilihan Jenis Soal -->
+  <label for="jenis" id="label-jenis" style="display:none;">Pilih Jenis Soal:</label>
+  <select id="jenis" style="display:none;">
+    <option value="">-- Pilih Jenis Soal --</option>
+    <option value="uts">UTS (Ulangan Tengah Semester)</option>
+    <option value="pts">PTS (Penilaian Tengah Semester)</option>
+  </select>
+
+  <!-- Hasil Soal -->
+  <div id="soal" class="soal-section">
+    <h3>Download Soal</h3>
+    <a id="file1" href="" download style="display:none;"><button>Download Soal 1</button></a>
+    <a id="file2" href="" download style="display:none;"><button>Download Soal 2</button></a>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 PakGurukiki | Semua Hak Dilindungi
+</footer>
+
+<script>
+const jenjangSelect = document.getElementById('jenjang');
+const kelasSelect = document.getElementById('kelas');
+const semesterSelect = document.getElementById('semester');
+const jenisSelect = document.getElementById('jenis');
+const labelKelas = document.getElementById('label-kelas');
+const labelSemester = document.getElementById('label-semester');
+const labelJenis = document.getElementById('label-jenis');
+const soalDiv = document.getElementById('soal');
+const file1 = document.getElementById('file1');
+const file2 = document.getElementById('file2');
+
+// Step 1: Pilih Jenjang
+jenjangSelect.addEventListener('change', ()=>{
+  soalDiv.style.display='none';
+  kelasSelect.innerHTML = '<option value="">-- Pilih Kelas --</option>';
+  kelasSelect.style.display='none';
+  semesterSelect.style.display='none';
+  jenisSelect.style.display='none';
+  labelKelas.style.display='none';
+  labelSemester.style.display='none';
+  labelJenis.style.display='none';
+
+  if(jenjangSelect.value === 'sd'){
+    for(let i=1; i<=6; i++){
+      kelasSelect.innerHTML += `<option value="${i}">Kelas ${i}</option>`;
+    }
+  } else if(jenjangSelect.value === 'smp'){
+    for(let i=7; i<=9; i++){
+      kelasSelect.innerHTML += `<option value="${i}">Kelas ${i}</option>`;
+    }
+  } else if(jenjangSelect.value === 'sma'){
+    for(let i=10; i<=12; i++){
+      kelasSelect.innerHTML += `<option value="${i}">Kelas ${i}</option>`;
+    }
+  }
+
+  if(jenjangSelect.value){
+    kelasSelect.style.display='block';
+    labelKelas.style.display='block';
+  }
+});
+
+// Step 2: Pilih Kelas
+kelasSelect.addEventListener('change', ()=>{
+  soalDiv.style.display='none';
+  jenisSelect.style.display='none';
+  labelJenis.style.display='none';
+  semesterSelect.value='';
+  jenisSelect.value='';
+  if(kelasSelect.value){
+    semesterSelect.style.display='block';
+    labelSemester.style.display='block';
+  } else {
+    semesterSelect.style.display='none';
+    labelSemester.style.display='none';
+  }
+});
+
+// Step 3: Pilih Semester
+semesterSelect.addEventListener('change', ()=>{
+  soalDiv.style.display='none';
+  jenisSelect.value='';
+  if(semesterSelect.value){
+    jenisSelect.style.display='block';
+    labelJenis.style.display='block';
+  } else {
+    jenisSelect.style.display='none';
+    labelJenis.style.display='none';
+  }
+});
+
+// Step 4: Pilih Jenis Soal
+jenisSelect.addEventListener('change', ()=>{
+  const jenjang = jenjangSelect.value;
+  const kelas = kelasSelect.value;
+  const semester = semesterSelect.value;
+  const jenis = jenisSelect.value;
+
+  if(jenis){
+    soalDiv.style.display='block';
+    file1.href = `soal-${jenjang}-kelas${kelas}-semester${semester}-${jenis}-1.pdf`;
+    file1.textContent = `Download Soal ${jenis.toUpperCase()} 1 (${jenjang.toUpperCase()} Kelas ${kelas} Semester ${semester})`;
+    file2.href = `soal-${jenjang}-kelas${kelas}-semester${semester}-${jenis}-2.pdf`;
+    file2.textContent = `Download Soal ${jenis.toUpperCase()} 2 (${jenjang.toUpperCase()} Kelas ${kelas} Semester ${semester})`;
+    file1.style.display='block';
+    file2.style.display='block';
+    soalDiv.scrollIntoView({behavior:'smooth'});
+  } else {
+    soalDiv.style.display='none';
+    file1.style.display='none';
+    file2.style.display='none';
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalender Pendidikan - PakGurukiki</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin:0; padding:0;
+    background: linear-gradient(135deg, #e0f7fa, #80deea);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+  }
+  header, footer {
+    background:#007bff;
+    color:white;
+    text-align:center;
+    padding:20px 0;
+    width:100%;
+  }
+  header h1, footer p { margin:0; }
+  
+  nav {
+    background:#0056b3;
+    width:100%;
+    text-align:center;
+    padding:10px;
+  }
+  nav a {
+    color:white;
+    margin:0 15px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+  }
+  nav a:hover { color:#ffd700; }
+
+  main {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    width:100%;
+    max-width:700px;
+    text-align:center;
+    padding:20px;
+  }
+  .info {
+    font-size:18px;
+    color:#004d40;
+    font-weight:500;
+    animation: fadeInText 1s ease forwards;
+  }
+  .year-btn {
+    background:#00acc1;
+    color:white;
+    border:none;
+    padding:25px 50px;
+    font-size:22px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease forwards;
+  }
+  .year-btn:hover {
+    background:#00838f;
+    transform: scale(1.05);
+    box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  }
+  @keyframes fadeIn {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+  }
+  @keyframes fadeInText {
+    from {opacity:0; transform:translateY(-10px);}
+    to {opacity:1; transform:translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Kalender Pendidikan</h1>
+  <p>Pilih Tahun Ajaran yang Kamu Inginkan</p>
+</header>
+
+<!-- MENU NAVBAR -->
+<nav>
+  <a href="index.html">Beranda</a>
+  <a href="download.html">Download RPP</a>
+  <a href="buku.html">Buku</a>
+  <a href="perangkat-ajar.html">Perangkat</a>
+  <a href="gudang-soal.html">Gudang Soal</a>
+  <a href="aplikasi-raport.html">Aplikasi Raport KM</a>
+  <a href="update-pendidikan.html">Berita</a>
+</nav>
+
+<main>
+  <p class="info">Hai Guru Hebat! Pilih tahun ajaran untuk melihat jadwal lengkap agar kegiatan belajar mengajar lebih terencana.</p>
+  <button class="year-btn" onclick="window.location.href='kalender-2025-2026.html'">2025 - 2026</button>
+  <button class="year-btn" onclick="window.location.href='kalender-2026-2027.html'">2026 - 2027</button>
+  <p class="info">Ingat, rencanakan setiap kegiatan dengan baik supaya murid tetap semangat belajar! 🌟</p>
+</main>
+
+<footer>
+  <p>&copy; 2025 PakGurukiki | Semua Hak Dilindungi</p>
+</footer>
+
+</body>
+</html>

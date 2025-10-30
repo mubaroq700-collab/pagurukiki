@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cari RPP - PakGurukiki</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f4f8ff;
+    color: #333;
+  }
+  header {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+  header h1 { margin: 0; font-size: 26px; }
+  header p { margin: 5px 0 0; font-size: 16px; }
+
+  main {
+    max-width: 800px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    text-align: center;
+    color: #007bff;
+  }
+
+  label {
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+  }
+
+  select, input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  button {
+    background: #007bff;
+    color: white;
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  footer {
+    text-align: center;
+    background: #007bff;
+    color: white;
+    padding: 15px 0;
+    margin-top: 40px;
+  }
+
+  .back-home {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .back-home:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔍 Cari RPP / Modul Ajar</h1>
+  <p>Temukan perangkat pembelajaran sesuai kebutuhanmu</p>
+</header>
+
+<main>
+  <a href="index.html" class="back-home">⬅️ Kembali ke Beranda</a>
+  <h2>Formulir Pencarian RPP</h2>
+
+  <label for="jenjang">Pilih Jenjang:</label>
+  <select id="jenjang">
+    <option value="">-- Pilih Jenjang --</option>
+    <option value="sd">SD</option>
+    <option value="smp">SMP</option>
+    <option value="sma">SMA</option>
+  </select>
+
+  <label for="kelas">Pilih Kelas:</label>
+  <select id="kelas">
+    <option value="">-- Pilih Kelas --</option>
+  </select>
+
+  <label for="mapel">Pilih Mata Pelajaran:</label>
+  <select id="mapel">
+    <option value="">-- Pilih Mata Pelajaran --</option>
+  </select>
+
+  <label for="keyword">Kata Kunci (opsional):</label>
+  <input type="text" id="keyword" placeholder="Contoh: Tema 3 atau Literasi...">
+
+  <button id="btnCari">🔎 Cari RPP</button>
+</main>
+
+<footer>
+  &copy; 2025 PakGurukiki | Dunia Pendidikan
+</footer>
+
+<script>
+const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
+
+const mapelData = {
+  'sd':['B.Indonesia','Matematika','B.Sunda','IPAS','PJOK','Pendidikan Pancasila'],
+  'smp':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Pendidikan Pancasila'],
+  'sma':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','Ekonomi','Geografi','B.Inggris']
+};
+
+const jenjangSelect = document.getElementById('jenjang');
+const kelasSelect = document.getElementById('kelas');
+const mapelSelect = document.getElementById('mapel');
+const btnCari = document.getElementById('btnCari');
+
+// Saat ganti jenjang
+jenjangSelect.addEventListener('change', ()=>{
+  const j = jenjangSelect.value;
+  kelasSelect.innerHTML = '<option value="">-- Pilih Kelas --</option>';
+  mapelSelect.innerHTML = '<option value="">-- Pilih Mata Pelajaran --</option>';
+  if (j) {
+    kelasData[j].forEach(k=>{
+      const opt = document.createElement('option');
+      opt.value = k;
+      opt.textContent = 'Kelas ' + k;
+      kelasSelect.appendChild(opt);
+    });
+    mapelData[j].forEach(m=>{
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      mapelSelect.appendChild(opt);
+    });
+  }
+});
+
+// Tombol cari → buka hasil-cari.html
+btnCari.addEventListener('click', ()=>{
+  const jenjang = jenjangSelect.value;
+  const kelas = kelasSelect.value;
+  const mapel = mapelSelect.value;
+  const keyword = document.getElementById('keyword').value.trim();
+
+  if (!jenjang || !kelas || !mapel) {
+    alert("Silakan pilih jenjang, kelas, dan mata pelajaran terlebih dahulu!");
+    return;
+  }
+
+  const url = `hasil-cari.html?jenjang=${jenjang}&kelas=${kelas}&mapel=${encodeURIComponent(mapel)}&keyword=${encodeURIComponent(keyword)}`;
+  window.location.href = url;
+});
+</script>
+
+</body>
+</html>
