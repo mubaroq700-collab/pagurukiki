@@ -90,8 +90,6 @@
   <div id="materi" class="materi-section">
     <h2>Materi</h2>
     <p>Pilih mata pelajaran di atas untuk menampilkan materi.</p>
-    <a id="file1" href="" download style="display:none;"><button>Download Materi 1</button></a>
-    <a id="file2" href="" download style="display:none;"><button>Download Materi 2</button></a>
   </div>
 </main>
 
@@ -106,8 +104,6 @@ const mapelSelect = document.getElementById('mapel');
 const labelKelas = document.getElementById('label-kelas');
 const labelMapel = document.getElementById('label-mapel');
 const materiDiv = document.getElementById('materi');
-const file1 = document.getElementById('file1');
-const file2 = document.getElementById('file2');
 
 const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
 
@@ -176,26 +172,39 @@ kelasSelect.addEventListener('change', ()=>{
   }
 });
 
-// Pilih Mapel
+// Pilih Mapel (otomatis ambil JSON)
 mapelSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
   const mapel = mapelSelect.value;
 
-  if(mapel){
-    materiDiv.style.display='block';
-    file1.href = `materi-${jenjang}-${kelas}-${mapel}-1.pdf`;
-    file1.textContent = `Download ${mapel} 1`;
-    file2.href = `materi-${jenjang}-${kelas}-${mapel}-2.pdf`;
-    file2.textContent = `Download ${mapel} 2`;
-    file1.style.display = 'block';
-    file2.style.display = 'block';
-    materiDiv.scrollIntoView({ behavior: 'smooth' });
-  } else {
-    materiDiv.style.display='none';
-    file1.style.display='none';
-    file2.style.display='none';
-  }
+  materiDiv.innerHTML = '<h2>Materi</h2><p>Memuat data...</p>';
+  materiDiv.style.display = 'block';
+
+  // Buat path JSON otomatis, misal: kelas5/ipas.json
+  const jsonPath = `kelas${kelas}/${mapel.toLowerCase()}.json`;
+
+  fetch(jsonPath)
+    .then(res => {
+      if (!res.ok) throw new Error('File JSON tidak ditemukan');
+      return res.json();
+    })
+    .then(data => {
+      materiDiv.innerHTML = `<h2>Daftar Materi ${mapel} Kelas ${kelas.toUpperCase()}</h2>`;
+      data.forEach(item => {
+        const a = document.createElement('a');
+        a.href = item.link;
+        a.download = '';
+        a.innerHTML = `<button>📘 ${item.nama}</button>`;
+        a.style.display = 'block';
+        a.style.margin = '10px 0';
+        materiDiv.appendChild(a);
+      });
+    })
+    .catch(err => {
+      materiDiv.innerHTML = `<p style="color:red;">Gagal memuat daftar materi.<br>${err.message}</p>`;
+      console.error(err);
+    });
 });
 </script>
 
