@@ -1,23 +1,202 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perangkat Ajar - PaguRukiki</title>
-<style> body{font-family:Arial, sans-serif;margin:0;padding:0} header,footer{background:#007bff;color:#fff;padding:20px;text-align:center} nav{background:#0056b3;padding:10px;text-align:center} nav a{color:#fff;margin:0 10px;text-decoration:none} main{max-width:900px;margin:20px auto;padding:20px} </style>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perangkat Ajar - PakGurukiki</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta name="description" content="Download perangkat ajar guru SD, SMP, SMA Kurikulum Merdeka.">
+<meta name="keywords" content="Perangkat ajar, RPP, modul ajar, guru SD, kurikulum merdeka">
+<meta name="author" content="Kiki Rizki Mubaroq">
+
+<style>
+  body {
+    font-family:'Poppins',sans-serif;
+    margin:0; padding:0;
+    background:#f8f9fa;
+    color:#333;
+  }
+  header {
+    background:#007bff; color:white;
+    text-align:center; padding:20px 0;
+  }
+  nav {
+    background:#0056b3;
+    display:flex; justify-content:center;
+    flex-wrap:wrap; gap:15px; padding:10px;
+  }
+  nav a {
+    color:white; text-decoration:none; font-weight:bold;
+    transition:0.3s;
+  }
+  nav a:hover { color:#ffd700; text-decoration:underline; }
+
+  .container {
+    max-width:1100px; margin:30px auto; padding:0 15px;
+  }
+  h1 {
+    text-align:center; color:#007bff;
+  }
+  .jenjang-section {
+    margin-top:40px;
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  }
+  .jenjang-section h2 {
+    border-left:5px solid #007bff;
+    padding-left:10px;
+    color:#0056b3;
+  }
+  .kelas-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-top:20px;
+  }
+  .kelas-box {
+    background:#e8f4ff;
+    border-radius:10px;
+    padding:20px;
+    text-align:center;
+    transition:0.3s;
+  }
+  .kelas-box:hover {
+    transform:translateY(-5px);
+    box-shadow:0 8px 15px rgba(0,0,0,0.2);
+  }
+  .kelas-box h3 {
+    margin:0;
+    color:#007bff;
+  }
+  .kelas-box p {
+    font-size:14px;
+    margin:10px 0 15px;
+  }
+  .btn-download {
+    background:#007bff; color:white;
+    border:none; border-radius:5px;
+    padding:8px 15px;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  .btn-download:hover { background:#0056b3; }
+  footer {
+    text-align:center;
+    background:#007bff;
+    color:white;
+    padding:15px 0;
+    margin-top:40px;
+  }
+</style>
 </head>
 <body>
-<header><h1>Perangkat Ajar</h1><p>Daftar perangkat pembelajaran</p></header>
+
+<header>
+  <h1>Perangkat Ajar</h1>
+  <p>Download perangkat ajar lengkap untuk semua jenjang pendidikan</p>
+</header>
+
 <nav>
   <a href="index.html">Beranda</a>
-  <a href="download.html">Download</a>
+  <a href="cari-rpp.html">Cari RPP</a>
+  <a href="download.html">Download RPP</a>
+  <a href="buku.html">Buku</a>
+  <a href="perangkat-ajar.html" style="color:#ffd700;">Perangkat Ajar</a>
+  <a href="update-pendidikan.html">Berita Pendidikan</a>
+  <a href="kontak.html">Kontak</a>
 </nav>
-<main>
-  <p>Halaman placeholder. Di sini akan ditempatkan perangkat ajar (RPP, modul, lembar kerja) per jenjang dan mata pelajaran.</p>
-  <ul>
-    <li><a href="download.html#paud">PAUD</a></li>
-    <li><a href="download.html#sd">SD</a></li>
-    <li><a href="download.html#smp">SMP</a></li>
-    <li><a href="download.html#sma">SMA</a></li>
-  </ul>
-</main>
-<footer>&copy; 2025 PaguRukiki</footer>
+
+<div class="container">
+
+  <!-- SD -->
+  <section class="jenjang-section" id="sd">
+    <h2>📚 Sekolah Dasar (SD)</h2>
+    <div class="kelas-grid">
+      <div class="kelas-box">
+        <h3>Kelas 1</h3>
+        <p>Perangkat ajar tematik & literasi awal.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 2</h3>
+        <p>Perangkat ajar Kurikulum Merdeka semester 1 & 2.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 3</h3>
+        <p>Modul ajar tematik dan proyek P5.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 4</h3>
+        <p>Perangkat ajar lengkap untuk guru kelas 4 SD.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 5</h3>
+        <p>RPP & modul ajar tematik serta profil pelajar Pancasila.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 6</h3>
+        <p>Persiapan ujian dan pembelajaran akhir SD.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SMP -->
+  <section class="jenjang-section" id="smp">
+    <h2>📝 Sekolah Menengah Pertama (SMP)</h2>
+    <div class="kelas-grid">
+      <div class="kelas-box">
+        <h3>Kelas 7</h3>
+        <p>Perangkat ajar lengkap mapel umum & P5.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 8</h3>
+        <p>Modul ajar & lembar kerja siswa (LKS).</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 9</h3>
+        <p>RPP & perangkat pembelajaran Kurikulum Merdeka.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SMA -->
+  <section class="jenjang-section" id="sma">
+    <h2>💡 Sekolah Menengah Atas (SMA)</h2>
+    <div class="kelas-grid">
+      <div class="kelas-box">
+        <h3>Kelas 10</h3>
+        <p>Perangkat ajar fase E Kurikulum Merdeka.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 11</h3>
+        <p>Modul ajar mata pelajaran pilihan dan projek P5.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+      <div class="kelas-box">
+        <h3>Kelas 12</h3>
+        <p>Perangkat ajar & asesmen pembelajaran akhir.</p>
+        <button class="btn-download">Unduh</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  &copy; 2025 Kiki Rizki Mubaroq | Dunia Pendidikan PakGurukiki
+</footer>
+
 </body>
 </html>
