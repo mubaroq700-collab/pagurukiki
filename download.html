@@ -6,49 +6,29 @@
 <title>Download Perangkat Ajar</title>
 <style>
   body { font-family: Arial, sans-serif; background: #f5f5f5; margin:0; padding:0; }
-  
-  header, footer { 
-    background: #007bff; 
-    color: white; 
-    text-align: center; 
-    padding: 20px 0; 
-  }
+  header, footer { background: #007bff; color: white; text-align: center; padding: 20px 0; }
   header h1 { margin:0; font-size: 24px; }
-  
   nav { background: #0056b3; text-align: center; padding: 10px; }
   nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; transition: 0.3s; }
   nav a:hover { color: #ffd700; }
-  
-  main { 
-    max-width: 800px; 
-    margin: 20px auto; 
-    background: white; 
-    border-radius: 10px; 
-    padding: 20px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  }
-  
+  main { max-width: 900px; margin: 20px auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+
   label { display:block; margin-top: 15px; font-weight: bold; }
-  select, button { 
-    padding: 10px; 
-    margin-top:5px; 
-    border-radius:5px; 
-    border:1px solid #ccc; 
-    width: 100%;
-    font-size: 16px;
-  }
-  
-  button { 
-    background: #007bff; 
-    color:white; 
-    border:none; 
-    cursor:pointer; 
-    transition:0.3s; 
-  }
+  select, button { padding: 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc; width: 100%; font-size: 16px; }
+  button { background: #007bff; color:white; border:none; cursor:pointer; transition:0.3s; }
   button:hover { background:#0056b3; }
 
-  .materi-section { display: none; margin-top: 20px; }
-  iframe { width: 100%; height: 500px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 15px; }
+  .materi-section { display: none; margin-top: 30px; }
+  iframe {
+    width: 100%;
+    height: 480px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  .download-btn { text-align: center; margin-top: 10px; }
+  .download-btn a { text-decoration: none; }
+  .download-btn button { width: auto; padding: 10px 25px; }
 
   @media (max-width: 600px){
     nav a { display:block; margin: 5px 0; }
@@ -80,14 +60,24 @@
   <label for="kelas" id="label-kelas" style="display:none;">Pilih Kelas:</label>
   <select id="kelas" style="display:none;"></select>
 
-  <label for="mapel" id="label-mapel" style="display:none;">Pilih Mata Pelajaran:</label>
-  <select id="mapel" style="display:none;"></select>
-
   <div id="materi" class="materi-section">
     <h2>Preview & Download RPP</h2>
-    <iframe id="preview" src="" title="Preview RPP"></iframe>
-    <a id="file1" href="" target="_blank"><button>Lihat / Download RPP Bab 1</button></a>
-    <a id="file2" href="" target="_blank"><button>Lihat / Download RPP Bab 2</button></a>
+
+    <div id="bab1-section" style="display:none;">
+      <h3>RPP Bab 1</h3>
+      <iframe id="pdfBab1" src=""></iframe>
+      <div class="download-btn">
+        <a id="downloadBab1" href="" download><button>Download Bab 1</button></a>
+      </div>
+    </div>
+
+    <div id="bab2-section" style="display:none;">
+      <h3>RPP Bab 2</h3>
+      <iframe id="pdfBab2" src=""></iframe>
+      <div class="download-btn">
+        <a id="downloadBab2" href="" download><button>Download Bab 2</button></a>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -98,91 +88,60 @@
 <script>
 const jenjangSelect = document.getElementById('jenjang');
 const kelasSelect = document.getElementById('kelas');
-const mapelSelect = document.getElementById('mapel');
 const labelKelas = document.getElementById('label-kelas');
-const labelMapel = document.getElementById('label-mapel');
 const materiDiv = document.getElementById('materi');
-const file1 = document.getElementById('file1');
-const file2 = document.getElementById('file2');
-const preview = document.getElementById('preview');
+const pdfBab1 = document.getElementById('pdfBab1');
+const pdfBab2 = document.getElementById('pdfBab2');
+const downloadBab1 = document.getElementById('downloadBab1');
+const downloadBab2 = document.getElementById('downloadBab2');
+const bab1Section = document.getElementById('bab1-section');
+const bab2Section = document.getElementById('bab2-section');
 
-const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
-const mapelData = {
-  'sd-1':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK']
-};
+const kelasData = { sd:[1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
 
+// Pilih Jenjang
 jenjangSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
-  materiDiv.style.display='none';
-  kelasSelect.style.display='none';
-  labelKelas.style.display='none';
-  mapelSelect.style.display='none';
-  labelMapel.style.display='none';
   kelasSelect.innerHTML='';
-  mapelSelect.innerHTML='';
+  materiDiv.style.display='none';
   if(jenjang){
     labelKelas.style.display='block';
     kelasSelect.style.display='block';
     kelasSelect.innerHTML='<option value="">-- Pilih Kelas --</option>';
     kelasData[jenjang].forEach(k=>{
-      const opt = document.createElement('option');
-      opt.value = k; opt.text = 'Kelas '+k;
-      kelasSelect.add(opt);
+      const option=document.createElement('option');
+      option.value=k;
+      option.text='Kelas '+k;
+      kelasSelect.add(option);
     });
+  } else {
+    labelKelas.style.display='none';
+    kelasSelect.style.display='none';
   }
 });
 
+// Pilih Kelas
 kelasSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
-  materiDiv.style.display='none';
-  mapelSelect.innerHTML='';
-  mapelSelect.style.display='none';
-  labelMapel.style.display='none';
-  if(kelas){
-    const key = jenjang+'-'+kelas;
-    const mapels = mapelData[key];
-    if(mapels){
-      labelMapel.style.display='block';
-      mapelSelect.style.display='block';
-      mapelSelect.innerHTML='<option value="">-- Pilih Mata Pelajaran --</option>';
-      mapels.forEach(m=>{
-        const opt = document.createElement('option');
-        opt.value = m;
-        opt.text = m;
-        mapelSelect.add(opt);
-      });
-    }
-  }
-});
 
-mapelSelect.addEventListener('change', ()=>{
-  const jenjang = jenjangSelect.value;
-  const kelas = kelasSelect.value;
-  const mapel = mapelSelect.value;
-  if(mapel){
+  if(jenjang && kelas){
+    // nama file otomatis
+    const file1 = `rpp-${jenjang}-kelas${kelas}-bab1.pdf`;
+    const file2 = `rpp-${jenjang}-kelas${kelas}-bab2.pdf`;
+
+    // preview PDF
+    pdfBab1.src = file1;
+    pdfBab2.src = file2;
+
+    // tombol download
+    downloadBab1.href = file1;
+    downloadBab2.href = file2;
+
     materiDiv.style.display='block';
-
-    if (jenjang === 'sd' && kelas === '1' && mapel === 'B.Indonesia') {
-      const baseURL = "https://pagurukiki.github.io/rpp/";
-      const file1URL = baseURL + "rpp-bahasa-indonesia-kelas1-bab1.pdf";
-      const file2URL = baseURL + "rpp-bahasa-indonesia-kelas1-bab2.pdf";
-
-      preview.src = file1URL;
-      file1.href = file1URL;
-      file2.href = file2URL;
-
-      file1.addEventListener('click', e => {
-        e.preventDefault();
-        preview.src = file1URL;
-      });
-
-      file2.addEventListener('click', e => {
-        e.preventDefault();
-        preview.src = file2URL;
-      });
-    }
-    materiDiv.scrollIntoView({ behavior: 'smooth' });
+    bab1Section.style.display='block';
+    bab2Section.style.display='block';
+    materiDiv.scrollIntoView({ behavior:'smooth' });
   } else {
     materiDiv.style.display='none';
   }
