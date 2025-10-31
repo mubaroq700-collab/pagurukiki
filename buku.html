@@ -66,10 +66,6 @@
   <label for="kelas" id="label-kelas">Pilih Kelas:</label>
   <select id="kelas"></select>
 
-  <!-- Pilih Mapel -->
-  <label for="mapel" id="label-mapel">Pilih Mata Pelajaran:</label>
-  <select id="mapel"></select>
-
   <!-- Daftar Buku -->
   <div id="bukuSection" class="buku-section">
     <h2>Buku</h2>
@@ -87,43 +83,23 @@ const bukuGuruBtn = document.getElementById('bukuGuru');
 const bukuSiswaBtn = document.getElementById('bukuSiswa');
 const jenjangSelect = document.getElementById('jenjang');
 const kelasSelect = document.getElementById('kelas');
-const mapelSelect = document.getElementById('mapel');
 const labelJenjang = document.getElementById('label-jenjang');
 const labelKelas = document.getElementById('label-kelas');
-const labelMapel = document.getElementById('label-mapel');
 const bukuSection = document.getElementById('bukuSection');
 const buku1 = document.getElementById('buku1');
 const buku2 = document.getElementById('buku2');
 
 const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
-const mapelData = {
-  'sd-1':['Matematika','B.Indonesia','IPA'],
-  'sd-2':['Matematika','B.Indonesia','IPA'],
-  'sd-3':['Matematika','B.Indonesia','IPA'],
-  'sd-4':['Matematika','B.Indonesia','IPA'],
-  'sd-5':['Matematika','B.Indonesia','IPA'],
-  'sd-6':['Matematika','B.Indonesia','IPA'],
-  'smp-1':['Matematika','B.Indonesia','IPA'],
-  'smp-2':['Matematika','B.Indonesia','IPA'],
-  'smp-3':['Matematika','B.Indonesia','IPA'],
-  'sma-1':['Matematika','B.Indonesia','IPA'],
-  'sma-2':['Matematika','B.Indonesia','IPA'],
-  'sma-3':['Matematika','B.Indonesia','IPA']
-};
-
 let tipeBuku = '';
 
 function resetSelections() {
   jenjangSelect.style.display='none';
   kelasSelect.style.display='none';
-  mapelSelect.style.display='none';
   labelJenjang.style.display='none';
   labelKelas.style.display='none';
-  labelMapel.style.display='none';
   bukuSection.style.display='none';
   jenjangSelect.innerHTML='';
   kelasSelect.innerHTML='';
-  mapelSelect.innerHTML='';
 }
 
 bukuGuruBtn.addEventListener('click', ()=>{
@@ -156,11 +132,8 @@ jenjangSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   kelasSelect.style.display='none';
   labelKelas.style.display='none';
-  mapelSelect.style.display='none';
-  labelMapel.style.display='none';
   bukuSection.style.display='none';
   kelasSelect.innerHTML='';
-  mapelSelect.innerHTML='';
   if(jenjang){
     labelKelas.style.display='block';
     kelasSelect.style.display='block';
@@ -177,37 +150,12 @@ jenjangSelect.addEventListener('change', ()=>{
 kelasSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
-  mapelSelect.style.display='none';
-  labelMapel.style.display='none';
-  mapelSelect.innerHTML='';
-  bukuSection.style.display='none';
   if(kelas){
-    const key = jenjang+'-'+kelas;
-    const mapels = mapelData[key];
-    if(mapels){
-      labelMapel.style.display='block';
-      mapelSelect.style.display='block';
-      mapelSelect.innerHTML='<option value="">-- Pilih Mata Pelajaran --</option>';
-      mapels.forEach(m=>{
-        const opt = document.createElement('option');
-        opt.value = m; opt.text = m;
-        mapelSelect.add(opt);
-      });
-    }
-  }
-});
-
-// Pilih Mapel
-mapelSelect.addEventListener('change', ()=>{
-  const jenjang = jenjangSelect.value;
-  const kelas = kelasSelect.value;
-  const mapel = mapelSelect.value;
-  if(mapel){
     bukuSection.style.display='block';
-    buku1.href = `buku-${tipeBuku}-${jenjang}-${kelas}-${mapel}-1.pdf`;
-    buku1.textContent = `Download ${mapel} 1`;
-    buku2.href = `buku-${tipeBuku}-${jenjang}-${kelas}-${mapel}-2.pdf`;
-    buku2.textContent = `Download ${mapel} 2`;
+    buku1.href = `buku-${tipeBuku}-${jenjang}-${kelas}-1.pdf`;
+    buku1.textContent = `Download Buku ${jenjang.toUpperCase()} Kelas ${kelas} - 1`;
+    buku2.href = `buku-${tipeBuku}-${jenjang}-${kelas}-2.pdf`;
+    buku2.textContent = `Download Buku ${jenjang.toUpperCase()} Kelas ${kelas} - 2`;
     bukuSection.scrollIntoView({behavior:'smooth'});
   } else {
     bukuSection.style.display='none';
