@@ -61,10 +61,10 @@ button:hover { background:#0056b3; }
 </footer>
 
 <script>
-// Data kelas
+// Data kelas per jenjang
 const kelasData = { sd:[1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
 
-// Data mapel per jenjang (bisa ditambah sesuai kebutuhan)
+// Data mapel per jenjang
 const mapelData = {
   sd: ['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pancasila','IPAS','PJOK'],
   smp:['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
@@ -128,15 +128,15 @@ mapelSelect.addEventListener('change', ()=>{
   const mapel = mapelSelect.value;
   fileContainer.innerHTML = '';
   if(jenjang && kelas && mapel){
-    // buat nama folder otomatis: assets/pdf/{jenjang}/kelas{n}/{mapel}/
+    // nama folder: assets/pdf/{jenjang}/kelas{n}/{mapel}/
     const folderPath = `assets/pdf/${jenjang}/kelas${kelas}/${mapel.toLowerCase().replace(/\s+/g,'')}/`;
-    // contoh file Bab 1 & Bab 2
+    // bab otomatis
     const files = ['bab1.pdf','bab2.pdf'];
     files.forEach(f=>{
       const a = document.createElement('a');
       a.href = folderPath+f;
       a.target = "_blank"; // preview dulu
-      a.textContent = `📄 ${f.replace('.pdf','')}`;
+      a.textContent = `📄 ${mapel} ${f.replace('.pdf','')}`;
       a.style.display = 'block';
       a.style.marginBottom = '5px';
       fileContainer.appendChild(a);
