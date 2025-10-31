@@ -1,140 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download Perangkat Ajar - PakGurukiki</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  body { 
-    font-family: 'Poppins', Arial, sans-serif; 
-    background: #f5f5f5; 
-    margin:0; 
-    padding:0; 
-  }
-  
-  header, footer { 
-    background: #007bff; 
-    color: white; 
-    text-align: center; 
-    padding: 20px 0; 
-  }
-  header h1 { margin:0; font-size: 28px; }
-  
-  nav { background: #0056b3; text-align: center; padding: 10px; }
-  nav a { 
-    color: white; 
-    margin: 0 15px; 
-    text-decoration: none; 
-    font-weight: 600; 
-    transition: 0.3s; 
-  }
-  nav a:hover { color: #ffd700; }
-  
-  main { 
-    max-width: 800px; 
-    margin: 30px auto; 
-    background: white; 
-    border-radius: 10px; 
-    padding: 25px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  }
-  
-  label { display:block; margin-top: 20px; font-weight: 600; } 
-  select { 
-    padding: 12px; 
-    margin-top: 8px; 
-    border-radius: 8px;  
-    border:1px solid #ccc; 
-    width: 100%;
-    font-size: 16px;
-    appearance: none;
-    background-color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23007bff' d='M6 8l-4-4h8l-4 4z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 30px; 
-  }
- 
-  .materi-section a { 
-    display:block; 
-    margin:10px 0; 
-    text-decoration: none;
-  }
- 
-  .download-btn {
-    display: block;
-    background: #28a745; 
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: 0.3s;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-  }
-  
-  .download-btn:hover { background: #1e7e34; }
- 
-  .materi-section { 
-    display: none; 
-    margin-top: 30px; 
-    padding-top: 20px; 
-    border-top: 1px solid #eee; 
-}
-  .materi-section h2 { color: #007bff; }
- 
-  @media (max-width: 600px){
-    nav a { display:block; margin: 5px 0; }
-    main { margin: 15px; padding: 15px; }
-  }
-</style>
-</head>
-<body>
-
-<header>
-    <h1>Download Perangkat Ajar</h1>
-</header>
-
-<nav>
-  <a href="index.html">Beranda</a>
-  <a href="download.html">Download Perangkat</a>   <a href="#">Tentang</a>
-  <a href="#">Kontak</a>
-</nav>
-
-<main>
-  <p style="text-align:center; color:#555;">Pilih jenjang, kelas, dan mata pelajaran untuk menemukan perangkat ajar yang Anda butuhkan.</p>
-
-  <label for="jenjang">Pilih Jenjang:</label>
-  <select id="jenjang">
-    <option value="">-- Pilih Jenjang --</option>
-    <option value="sd">SD</option>
-    <option value="smp">SMP</option>
-    <option value="sma">SMA</option>
-  </select>
-
-  <label for="kelas" id="label-kelas" style="display:none;">Pilih Kelas:</label>
-  <select id="kelas" style="display:none;"></select>
-
-  <label for="mapel" id="label-mapel" style="display:none;">Pilih Mata Pelajaran:</label>
-  <select id="mapel" style="display:none;"></select>
-
-  <div id="materi" class="materi-section">
-    <h2 id="materi-title" style="margin-bottom: 10px;">File Tersedia untuk di *Review*</h2>
-    <p id="materi-keterangan" style="text-align:center; color:#555;">Klik tombol di bawah ini untuk melihat file PDF.</p>
-        <a id="file1" href="#" style="display:none;" class="download-btn"></a>
-    <a id="file2" href="#" style="display:none;" class="download-btn"></a>
-  </div>
-</main>
-
-<footer>
-  &copy; 2025 PakGurukiki | Semua Hak Dilindungi
-</footer>
-
 <script>
 const jenjangSelect = document.getElementById('jenjang');
 const kelasSelect = document.getElementById('kelas');
@@ -153,14 +16,25 @@ const kelasData = {
     sma: [{val: 10, text: 'Kelas 10'}, {val: 11, text: 'Kelas 11'}, {val: 12, text: 'Kelas 12'}]
 };
 
+// DATA MATA PELAJARAN LENGKAP - INI BAGIAN YANG DIPERBAIKI
 const mapelData = {
-  'sd-1':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK'],
-  'sd-2':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK'],
-  'sd-3':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK'],
-  'sd-4':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial'],
-  'smp-7':['B.Indonesia','Matematika','IPA','IPS','B.Inggris'],
-  'smp-8':['B.Indonesia','Matematika','IPA','IPS','B.Inggris'],
-  'sma-10':['B.Indonesia','Matematika','Fisika','Kimia','Biologi'],
+    // SD KELAS 1-6
+    'sd-1':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK','Seni Budaya'],
+    'sd-2':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK','Seni Budaya'],
+    'sd-3':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK','Seni Budaya'],
+    'sd-4':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial','B.Inggris','PAI','PJOK','Seni Budaya'],
+    'sd-5':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial','B.Inggris','PAI','PJOK','Seni Budaya'],
+    'sd-6':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial','B.Inggris','PAI','PJOK','Seni Budaya'],
+
+    // SMP KELAS 7-9
+    'smp-7':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Seni Budaya','PJOK','Informatika'],
+    'smp-8':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Seni Budaya','PJOK','Informatika'],
+    'smp-9':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Seni Budaya','PJOK','Informatika'],
+    
+    // SMA KELAS 10-12
+    'sma-10':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','B.Inggris','Sejarah','Ekonomi'],
+    'sma-11':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','B.Inggris','Sejarah','Ekonomi'],
+    'sma-12':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','B.Inggris','Sejarah','Ekonomi'],
 };
 
 
@@ -235,8 +109,9 @@ mapelSelect.addEventListener('change', ()=>{
     materiTitle.textContent = "File Tersedia untuk di *Review*";
     materiKeterangan.textContent = "Klik tombol di bawah ini untuk melihat file PDF.";
     
+    // Logika penentuan file dan URL
     if (jenjang === 'sd' && kelas === '1' && mapel === 'B.Indonesia') {
-        // Pastikan path ini benar di GitHub Pages Anda
+        // PATH: Pastikan file ada di folder 'perangkat' di GitHub Anda
         file1.href = `perangkat/rpp-bahasa-indonesia-kelas1-bab1.pdf`; 
         file2.href = `perangkat/rpp-bahasa-indonesia-kelas1-bab2.pdf`;
         
@@ -246,6 +121,7 @@ mapelSelect.addEventListener('change', ()=>{
         file1.style.display = 'block';
         file2.style.display = 'block';
     } else {
+        // Kasus file belum tersedia
         materiTitle.textContent = "Mohon Maaf";
         materiKeterangan.textContent = `Perangkat ajar untuk ${mapel} Kelas ${kelas} saat ini belum tersedia.`;
         file1.style.display = 'none';
@@ -258,6 +134,3 @@ mapelSelect.addEventListener('change', ()=>{
   }
 });
 </script>
-
-</body>
-</html>
