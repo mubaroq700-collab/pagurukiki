@@ -16,27 +16,37 @@ const kelasData = {
     sma: [{val: 10, text: 'Kelas 10'}, {val: 11, text: 'Kelas 11'}, {val: 12, text: 'Kelas 12'}]
 };
 
-// DATA MATA PELAJARAN LENGKAP - INI BAGIAN YANG DIPERBAIKI
+// DATA MATA PELAJARAN LENGKAP
 const mapelData = {
-    // SD KELAS 1-6
     'sd-1':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK','Seni Budaya'],
     'sd-2':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK','Seni Budaya'],
     'sd-3':['B.Indonesia','Matematika','B.Sunda','PAI','IPAS','PJOK','Seni Budaya'],
     'sd-4':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial','B.Inggris','PAI','PJOK','Seni Budaya'],
     'sd-5':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial','B.Inggris','PAI','PJOK','Seni Budaya'],
     'sd-6':['B.Indonesia','Matematika','Ilmu Pengetahuan Alam','Ilmu Pengetahuan Sosial','B.Inggris','PAI','PJOK','Seni Budaya'],
-
-    // SMP KELAS 7-9
     'smp-7':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Seni Budaya','PJOK','Informatika'],
     'smp-8':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Seni Budaya','PJOK','Informatika'],
     'smp-9':['B.Indonesia','Matematika','IPA','IPS','B.Inggris','Seni Budaya','PJOK','Informatika'],
-    
-    // SMA KELAS 10-12
     'sma-10':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','B.Inggris','Sejarah','Ekonomi'],
     'sma-11':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','B.Inggris','Sejarah','Ekonomi'],
     'sma-12':['B.Indonesia','Matematika','Fisika','Kimia','Biologi','B.Inggris','Sejarah','Ekonomi'],
 };
 
+// DATA PATH FILE BARU
+// Gunakan format: 'jenjang-kelas-mapel': ['nama_file_1.pdf', 'nama_file_2.pdf']
+const fileData = {
+    // SD KELAS 1
+    'sd-1-B.Indonesia': ['rpp-bahasa-indonesia-kelas1-bab1.pdf', 'rpp-bahasa-indonesia-kelas1-bab2.pdf'],
+    'sd-1-Matematika': ['rpp-matematika-kelas1-bab1.pdf', 'rpp-matematika-kelas1-bab2.pdf'],
+    
+    // SD KELAS 2
+    'sd-2-B.Indonesia': ['rpp-bahasa-indonesia-kelas2-bab1.pdf', 'rpp-bahasa-indonesia-kelas2-bab2.pdf'],
+
+    // SMP KELAS 7
+    'smp-7-Matematika': ['rpp-matematika-kelas7-bab1.pdf', 'rpp-matematika-kelas7-bab2.pdf'],
+    
+    // Anda bisa tambahkan data file lainnya di sini
+};
 
 function resetSelection(fromSelect) {
     if (fromSelect !== 'jenjang') {
@@ -52,13 +62,15 @@ function resetSelection(fromSelect) {
     materiDiv.style.display='none';
     file1.style.display='none';
     file2.style.display='none';
+    materiTitle.textContent = "File Tersedia untuk di *Review*";
+    materiKeterangan.textContent = "Klik tombol di bawah ini untuk melihat file PDF.";
 }
 
 
 jenjangSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   resetSelection('jenjang');
-
+ // Logika penambahan kelas (sudah benar)
   if(jenjang){
     labelKelas.style.display='block';
     kelasSelect.style.display='block';
@@ -77,7 +89,7 @@ kelasSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
   resetSelection('kelas');
-  
+ // Logika penambahan mapel (sudah benar)
   if(kelas){
     const key = jenjang+'-'+kelas;
     const mapels = mapelData[key];
@@ -100,26 +112,33 @@ mapelSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
   const mapel = mapelSelect.value;
+  const fileKey = `${jenjang}-${kelas}-${mapel}`; // Contoh: 'sd-1-B.Indonesia'
 
   file1.style.display = 'none';
   file2.style.display = 'none';
 
   if(mapel){
     materiDiv.style.display='block';
-    materiTitle.textContent = "File Tersedia untuk di *Review*";
-    materiKeterangan.textContent = "Klik tombol di bawah ini untuk melihat file PDF.";
     
-    // Logika penentuan file dan URL
-    if (jenjang === 'sd' && kelas === '1' && mapel === 'B.Indonesia') {
-        // PATH: Pastikan file ada di folder 'perangkat' di GitHub Anda
-        file1.href = `perangkat/rpp-bahasa-indonesia-kelas1-bab1.pdf`; 
-        file2.href = `perangkat/rpp-bahasa-indonesia-kelas1-bab2.pdf`;
-        
-        file1.textContent = `Review RPP ${mapel} Kelas ${kelas} - Bab 1`;
-        file2.textContent = `Review RPP ${mapel} Kelas ${kelas} - Bab 2`;
+    // **LOGIKA PENGAMBILAN FILE DARI fileData**
+    const files = fileData[fileKey];
 
-        file1.style.display = 'block';
-        file2.style.display = 'block';
+    if (files && files.length > 0) {
+        materiTitle.textContent = "File Tersedia untuk di *Review*";
+        materiKeterangan.textContent = "Klik tombol di bawah ini untuk melihat file PDF.";
+        
+        // File 1
+        file1.href = `perangkat/${files[0]}`; // Mengambil file pertama dari array
+        file1.textContent = `Review Perangkat ${mapel} - File 1`;
+        file1.style.display = 'block';
+
+        // File 2 (Jika ada)
+        if (files.length > 1) {
+            file2.href = `perangkat/${files[1]}`; // Mengambil file kedua dari array
+            file2.textContent = `Review Perangkat ${mapel} - File 2`;
+            file2.style.display = 'block';
+        }
+
     } else {
         // Kasus file belum tersedia
         materiTitle.textContent = "Mohon Maaf";
