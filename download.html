@@ -69,7 +69,6 @@
 </nav>
 
 <main>
-  <!-- Pilih Jenjang -->
   <label for="jenjang">Pilih Jenjang:</label>
   <select id="jenjang">
     <option value="">-- Pilih Jenjang --</option>
@@ -78,25 +77,22 @@
     <option value="sma">SMA</option>
   </select>
 
-  <!-- Pilih Kelas -->
   <label for="kelas" id="label-kelas" style="display:none;">Pilih Kelas:</label>
   <select id="kelas" style="display:none;"></select>
 
-  <!-- Pilih Mata Pelajaran -->
   <label for="mapel" id="label-mapel" style="display:none;">Pilih Mata Pelajaran:</label>
   <select id="mapel" style="display:none;"></select>
 
-  <!-- Materi -->
   <div id="materi" class="materi-section">
     <h2>Materi</h2>
     <p>Pilih mata pelajaran di atas untuk menampilkan materi.</p>
-    <a id="file1" href="" download style="display:none;"><button>Download Materi 1</button></a>
-    <a id="file2" href="" download style="display:none;"><button>Download Materi 2</button></a>
+    <a id="file1" href="" download style="display:none;"><button>Download RPP Bab 1</button></a>
+    <a id="file2" href="" download style="display:none;"><button>Download RPP Bab 2</button></a>
   </div>
 </main>
 
 <footer>
-  &copy; 2025 PaguRukiki | Semua Hak Dilindungi
+  &copy; 2025 PakGurukiki | Semua Hak Dilindungi
 </footer>
 
 <script>
@@ -117,13 +113,7 @@ const mapelData = {
   'sd-3':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
   'sd-4':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
   'sd-5':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-6':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'smp-1':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'smp-2':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'smp-3':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'sma-1':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'sma-2':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'sma-3':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK']
+  'sd-6':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK']
 };
 
 // Pilih Jenjang
@@ -184,12 +174,17 @@ mapelSelect.addEventListener('change', ()=>{
 
   if(mapel){
     materiDiv.style.display='block';
-    file1.href = `materi-${jenjang}-${kelas}-${mapel}-1.pdf`;
-    file1.textContent = `Download ${mapel} 1`;
-    file2.href = `materi-${jenjang}-${kelas}-${mapel}-2.pdf`;
-    file2.textContent = `Download ${mapel} 2`;
-    file1.style.display = 'block';
-    file2.style.display = 'block';
+
+    if (jenjang === 'sd' && kelas === '1' && mapel === 'B.Indonesia') {
+      file1.href = 'rpp-bahasa-indonesia-kelas1-bab1.pdf';
+      file2.href = 'rpp-bahasa-indonesia-kelas1-bab2.pdf';
+      file1.style.display = 'block';
+      file2.style.display = 'block';
+    } else {
+      file1.style.display = 'none';
+      file2.style.display = 'none';
+    }
+
     materiDiv.scrollIntoView({ behavior: 'smooth' });
   } else {
     materiDiv.style.display='none';
