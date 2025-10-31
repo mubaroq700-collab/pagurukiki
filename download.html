@@ -5,78 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Download Perangkat Ajar</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #f5f5f5; margin:0; padding:0; }
-  
-  header, footer { 
-    background: #007bff; 
-    color: white; 
-    text-align: center; 
-    padding: 20px 0; 
-  }
-  header h1 { margin:0; font-size: 24px; }
-  
-  nav { background: #0056b3; text-align: center; padding: 10px; }
-  nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; transition: 0.3s; }
-  nav a:hover { color: #ffd700; }
-  
-  main { 
-    max-width: 800px; 
-    margin: 20px auto; 
-    background: white; 
-    border-radius: 10px; 
-    padding: 20px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  }
-  
-  label { display:block; margin-top: 15px; font-weight: bold; }
-  select, button { 
-    padding: 10px; 
-    margin-top:5px; 
-    border-radius:5px; 
-    border:1px solid #ccc; 
-    width: 100%;
-    font-size: 16px;
-  }
-  
-  button { 
-    background: #007bff; 
-    color:white; 
-    border:none; 
-    cursor:pointer; 
-    transition:0.3s; 
-  }
-  button:hover { background:#0056b3; }
-
-  .materi-section { display: none; margin-top: 20px; }
-  .materi-section a { display:block; margin:10px 0; text-align:center; }
-  
-  .file-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-
-  @media (max-width: 600px){
-    nav a { display:block; margin: 5px 0; }
-    .file-buttons { flex-direction: column; }
-  }
+body { font-family: Arial, sans-serif; background: #f5f5f5; margin:0; padding:0; }
+header, footer { background: #007bff; color: white; text-align: center; padding: 20px 0; }
+header h1 { margin:0; font-size: 24px; }
+nav { background: #0056b3; text-align: center; padding: 10px; }
+nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+nav a:hover { color: #ffd700; }
+main { max-width: 800px; margin: 20px auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+label { display:block; margin-top: 15px; font-weight: bold; }
+select, button { padding: 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc; width: 100%; font-size: 16px; }
+button { background: #007bff; color:white; border:none; cursor:pointer; transition:0.3s; }
+button:hover { background:#0056b3; }
+.materi-section { display: none; margin-top: 20px; }
+.materi-section a { display:block; margin:10px 0; text-align:center; }
+@media (max-width: 600px){ nav a { display:block; margin: 5px 0; } }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Download Perangkat Ajar</h1>
+<h1>Download Perangkat Ajar</h1>
 </header>
 
 <nav>
-  <a href="index.html">Beranda</a>
-  <a href="download.html">Download Perangkat</a>
-  <a href="#">Tentang</a>
-  <a href="#">Kontak</a>
+<a href="index.html">Beranda</a>
+<a href="download.html">Download Perangkat</a>
+<a href="#">Tentang</a>
+<a href="#">Kontak</a>
 </nav>
 
 <main>
-  <!-- Pilih Jenjang -->
   <label for="jenjang">Pilih Jenjang:</label>
   <select id="jenjang">
     <option value="">-- Pilih Jenjang --</option>
@@ -85,84 +43,61 @@
     <option value="sma">SMA</option>
   </select>
 
-  <!-- Pilih Kelas -->
   <label for="kelas" id="label-kelas" style="display:none;">Pilih Kelas:</label>
   <select id="kelas" style="display:none;"></select>
 
-  <!-- Pilih Mata Pelajaran -->
   <label for="mapel" id="label-mapel" style="display:none;">Pilih Mata Pelajaran:</label>
   <select id="mapel" style="display:none;"></select>
 
-  <!-- Materi -->
   <div id="materi" class="materi-section">
     <h2>Materi</h2>
-    <p>Pilih mata pelajaran di atas untuk menampilkan materi.</p>
-
-    <div class="file-buttons">
-      <a id="preview1" href="" target="_blank" style="display:none;"><button>Lihat Materi 1</button></a>
-      <a id="file1" href="" download style="display:none;"><button>Download Materi 1</button></a>
-    </div>
-
-    <div class="file-buttons">
-      <a id="preview2" href="" target="_blank" style="display:none;"><button>Lihat Materi 2</button></a>
-      <a id="file2" href="" download style="display:none;"><button>Download Materi 2</button></a>
-    </div>
+    <p>Pilih file di bawah untuk preview di browser sebelum download:</p>
+    <div id="fileContainer"></div>
   </div>
 </main>
 
 <footer>
-  &copy; 2025 PaguRukiki | Semua Hak Dilindungi
+&copy; 2025 PaguRukiki | Semua Hak Dilindungi
 </footer>
 
 <script>
+// Data kelas
+const kelasData = { sd:[1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
+
+// Data mapel per jenjang (bisa ditambah sesuai kebutuhan)
+const mapelData = {
+  sd: ['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pancasila','IPAS','PJOK'],
+  smp:['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
+  sma:['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK']
+};
+
+// Elemen
 const jenjangSelect = document.getElementById('jenjang');
 const kelasSelect = document.getElementById('kelas');
 const mapelSelect = document.getElementById('mapel');
 const labelKelas = document.getElementById('label-kelas');
 const labelMapel = document.getElementById('label-mapel');
 const materiDiv = document.getElementById('materi');
-const file1 = document.getElementById('file1');
-const file2 = document.getElementById('file2');
-const preview1 = document.getElementById('preview1');
-const preview2 = document.getElementById('preview2');
-
-const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
-
-const mapelData = {
-  'sd-1':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-2':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-3':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-4':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-5':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-6':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'smp-1':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'smp-2':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'smp-3':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'sma-1':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'sma-2':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  'sma-3':['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK']
-};
+const fileContainer = document.getElementById('fileContainer');
 
 // Pilih Jenjang
 jenjangSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
-  materiDiv.style.display='none';
-  kelasSelect.style.display='none';
-  labelKelas.style.display='none';
-  mapelSelect.style.display='none';
-  labelMapel.style.display='none';
-  kelasSelect.innerHTML='';
-  mapelSelect.innerHTML='';
-
+  kelasSelect.innerHTML = '';
+  mapelSelect.innerHTML = '';
+  fileContainer.innerHTML = '';
+  materiDiv.style.display = 'none';
+  labelKelas.style.display = jenjang ? 'block' : 'none';
+  labelMapel.style.display = 'none';
+  kelasSelect.style.display = jenjang ? 'block' : 'none';
+  mapelSelect.style.display = 'none';
   if(jenjang){
-    labelKelas.style.display='block';
-    kelasSelect.style.display='block';
-    kelasSelect.innerHTML='<option value="">-- Pilih Kelas --</option>';
+    kelasSelect.innerHTML = '<option value="">-- Pilih Kelas --</option>';
     kelasData[jenjang].forEach(k=>{
-      const option = document.createElement('option');
-      option.value = k;
-      option.text = 'Kelas '+k;
-      kelasSelect.add(option);
+      const opt = document.createElement('option');
+      opt.value = k;
+      opt.text = 'Kelas '+k;
+      kelasSelect.add(opt);
     });
   }
 });
@@ -171,25 +106,18 @@ jenjangSelect.addEventListener('change', ()=>{
 kelasSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
-  materiDiv.style.display='none';
-  mapelSelect.innerHTML='';
-  mapelSelect.style.display='none';
-  labelMapel.style.display='none';
-
-  if(kelas){
-    const key = jenjang+'-'+kelas;
-    const mapels = mapelData[key];
-    if(mapels){
-      labelMapel.style.display='block';
-      mapelSelect.style.display='block';
-      mapelSelect.innerHTML='<option value="">-- Pilih Mata Pelajaran --</option>';
-      mapels.forEach(m=>{
-        const option = document.createElement('option');
-        option.value = m;
-        option.text = m;
-        mapelSelect.add(option);
-      });
-    }
+  mapelSelect.innerHTML = '';
+  fileContainer.innerHTML = '';
+  materiDiv.style.display = 'none';
+  labelMapel.style.display = (jenjang && kelas) ? 'block' : 'none';
+  mapelSelect.style.display = (jenjang && kelas) ? 'block' : 'none';
+  if(jenjang && kelas){
+    mapelData[jenjang].forEach(m=>{
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.text = m;
+      mapelSelect.add(opt);
+    });
   }
 });
 
@@ -198,29 +126,25 @@ mapelSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
   const mapel = mapelSelect.value;
-
-  if(mapel){
-    materiDiv.style.display='block';
-    const fileName1 = `materi-${jenjang}-${kelas}-${mapel}-1.pdf`;
-    const fileName2 = `materi-${jenjang}-${kelas}-${mapel}-2.pdf`;
-
-    preview1.href = fileName1;
-    file1.href = fileName1;
-    preview2.href = fileName2;
-    file2.href = fileName2;
-
-    preview1.style.display = 'block';
-    file1.style.display = 'block';
-    preview2.style.display = 'block';
-    file2.style.display = 'block';
-
-    materiDiv.scrollIntoView({ behavior: 'smooth' });
+  fileContainer.innerHTML = '';
+  if(jenjang && kelas && mapel){
+    // buat nama folder otomatis: assets/pdf/{jenjang}/kelas{n}/{mapel}/
+    const folderPath = `assets/pdf/${jenjang}/kelas${kelas}/${mapel.toLowerCase().replace(/\s+/g,'')}/`;
+    // contoh file Bab 1 & Bab 2
+    const files = ['bab1.pdf','bab2.pdf'];
+    files.forEach(f=>{
+      const a = document.createElement('a');
+      a.href = folderPath+f;
+      a.target = "_blank"; // preview dulu
+      a.textContent = `📄 ${f.replace('.pdf','')}`;
+      a.style.display = 'block';
+      a.style.marginBottom = '5px';
+      fileContainer.appendChild(a);
+    });
+    materiDiv.style.display = 'block';
+    materiDiv.scrollIntoView({behavior:'smooth'});
   } else {
-    materiDiv.style.display='none';
-    preview1.style.display='none';
-    preview2.style.display='none';
-    file1.style.display='none';
-    file2.style.display='none';
+    materiDiv.style.display = 'none';
   }
 });
 </script>
