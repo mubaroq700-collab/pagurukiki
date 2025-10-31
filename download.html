@@ -51,7 +51,7 @@ button:hover { background:#0056b3; }
 
   <div id="materi" class="materi-section">
     <h2>Materi</h2>
-    <p>Pilih file di bawah untuk preview di browser sebelum download:</p>
+    <p>Pilih file di bawah untuk preview PDF:</p>
     <div id="fileContainer"></div>
   </div>
 </main>
@@ -61,14 +61,12 @@ button:hover { background:#0056b3; }
 </footer>
 
 <script>
-// Data kelas per jenjang
+// Data kelas & mapel otomatis
 const kelasData = { sd:[1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
-
-// Data mapel per jenjang
 const mapelData = {
-  sd: ['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pancasila','IPAS','PJOK'],
-  smp:['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK'],
-  sma:['Pendidikan Agama','Pancasila','B.Indonesia','B.Inggris','Matematika','IPA','IPS','Seni Budaya & Prakarya','PJOK']
+  sd: ['BahasaIndonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pancasila','IPAS','PJOK'],
+  smp:['PendidikanAgama','Pancasila','BahasaIndonesia','B.Inggris','Matematika','IPA','IPS','SeniBudaya','PJOK'],
+  sma:['PendidikanAgama','Pancasila','BahasaIndonesia','B.Inggris','Matematika','IPA','IPS','SeniBudaya','PJOK']
 };
 
 // Elemen
@@ -115,7 +113,7 @@ kelasSelect.addEventListener('change', ()=>{
     mapelData[jenjang].forEach(m=>{
       const opt = document.createElement('option');
       opt.value = m;
-      opt.text = m;
+      opt.text = m.replace(/([A-Z])/g,' $1').trim(); // format spasi
       mapelSelect.add(opt);
     });
   }
@@ -128,15 +126,12 @@ mapelSelect.addEventListener('change', ()=>{
   const mapel = mapelSelect.value;
   fileContainer.innerHTML = '';
   if(jenjang && kelas && mapel){
-    // nama folder: assets/pdf/{jenjang}/kelas{n}/{mapel}/
-    const folderPath = `assets/pdf/${jenjang}/kelas${kelas}/${mapel.toLowerCase().replace(/\s+/g,'')}/`;
-    // bab otomatis
-    const files = ['bab1.pdf','bab2.pdf'];
-    files.forEach(f=>{
+    const folderPath = `assets/pdf/${jenjang}/kelas${kelas}/${mapel.toLowerCase()}/`;
+    ['bab1.pdf','bab2.pdf'].forEach(f=>{
       const a = document.createElement('a');
       a.href = folderPath+f;
-      a.target = "_blank"; // preview dulu
-      a.textContent = `📄 ${mapel} ${f.replace('.pdf','')}`;
+      a.target="_blank"; // preview di browser
+      a.textContent = `📄 ${mapel.replace(/([A-Z])/g,' $1').trim()} ${f.replace('.pdf','')}`;
       a.style.display = 'block';
       a.style.marginBottom = '5px';
       fileContainer.appendChild(a);
