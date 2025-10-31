@@ -48,8 +48,8 @@
   button:hover { background:#0056b3; }
 
   .materi-section { display: none; margin-top: 20px; }
-  .materi-section a { display:block; margin:10px 0; text-align:center; }
-  
+  iframe { width: 100%; height: 500px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 15px; }
+
   @media (max-width: 600px){
     nav a { display:block; margin: 5px 0; }
   }
@@ -84,10 +84,10 @@
   <select id="mapel" style="display:none;"></select>
 
   <div id="materi" class="materi-section">
-    <h2>Materi</h2>
-    <p>Pilih mata pelajaran di atas untuk menampilkan materi.</p>
-    <a id="file1" href="" download style="display:none;"><button>Download RPP Bab 1</button></a>
-    <a id="file2" href="" download style="display:none;"><button>Download RPP Bab 2</button></a>
+    <h2>Preview & Download RPP</h2>
+    <iframe id="preview" src="" title="Preview RPP"></iframe>
+    <a id="file1" href="" target="_blank"><button>Lihat / Download RPP Bab 1</button></a>
+    <a id="file2" href="" target="_blank"><button>Lihat / Download RPP Bab 2</button></a>
   </div>
 </main>
 
@@ -104,19 +104,13 @@ const labelMapel = document.getElementById('label-mapel');
 const materiDiv = document.getElementById('materi');
 const file1 = document.getElementById('file1');
 const file2 = document.getElementById('file2');
+const preview = document.getElementById('preview');
 
 const kelasData = { sd: [1,2,3,4,5,6], smp:[1,2,3], sma:[1,2,3] };
-
 const mapelData = {
-  'sd-1':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-2':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-3':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-4':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-5':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK'],
-  'sd-6':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK']
+  'sd-1':['B.Indonesia','Matematika','B.Sunda','PLH','B.Inggris','PAI','Pendidikan Pancasila','IPAS','PJOK']
 };
 
-// Pilih Jenjang
 jenjangSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   materiDiv.style.display='none';
@@ -126,21 +120,18 @@ jenjangSelect.addEventListener('change', ()=>{
   labelMapel.style.display='none';
   kelasSelect.innerHTML='';
   mapelSelect.innerHTML='';
-
   if(jenjang){
     labelKelas.style.display='block';
     kelasSelect.style.display='block';
     kelasSelect.innerHTML='<option value="">-- Pilih Kelas --</option>';
     kelasData[jenjang].forEach(k=>{
-      const option = document.createElement('option');
-      option.value = k;
-      option.text = 'Kelas '+k;
-      kelasSelect.add(option);
+      const opt = document.createElement('option');
+      opt.value = k; opt.text = 'Kelas '+k;
+      kelasSelect.add(opt);
     });
   }
 });
 
-// Pilih Kelas
 kelasSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
@@ -148,7 +139,6 @@ kelasSelect.addEventListener('change', ()=>{
   mapelSelect.innerHTML='';
   mapelSelect.style.display='none';
   labelMapel.style.display='none';
-
   if(kelas){
     const key = jenjang+'-'+kelas;
     const mapels = mapelData[key];
@@ -157,39 +147,44 @@ kelasSelect.addEventListener('change', ()=>{
       mapelSelect.style.display='block';
       mapelSelect.innerHTML='<option value="">-- Pilih Mata Pelajaran --</option>';
       mapels.forEach(m=>{
-        const option = document.createElement('option');
-        option.value = m;
-        option.text = m;
-        mapelSelect.add(option);
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.text = m;
+        mapelSelect.add(opt);
       });
     }
   }
 });
 
-// Pilih Mapel
 mapelSelect.addEventListener('change', ()=>{
   const jenjang = jenjangSelect.value;
   const kelas = kelasSelect.value;
   const mapel = mapelSelect.value;
-
   if(mapel){
     materiDiv.style.display='block';
 
     if (jenjang === 'sd' && kelas === '1' && mapel === 'B.Indonesia') {
-      file1.href = 'rpp-bahasa-indonesia-kelas1-bab1.pdf';
-      file2.href = 'rpp-bahasa-indonesia-kelas1-bab2.pdf';
-      file1.style.display = 'block';
-      file2.style.display = 'block';
-    } else {
-      file1.style.display = 'none';
-      file2.style.display = 'none';
-    }
+      const baseURL = "https://pagurukiki.github.io/rpp/";
+      const file1URL = baseURL + "rpp-bahasa-indonesia-kelas1-bab1.pdf";
+      const file2URL = baseURL + "rpp-bahasa-indonesia-kelas1-bab2.pdf";
 
+      preview.src = file1URL;
+      file1.href = file1URL;
+      file2.href = file2URL;
+
+      file1.addEventListener('click', e => {
+        e.preventDefault();
+        preview.src = file1URL;
+      });
+
+      file2.addEventListener('click', e => {
+        e.preventDefault();
+        preview.src = file2URL;
+      });
+    }
     materiDiv.scrollIntoView({ behavior: 'smooth' });
   } else {
     materiDiv.style.display='none';
-    file1.style.display='none';
-    file2.style.display='none';
   }
 });
 </script>
